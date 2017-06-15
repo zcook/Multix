@@ -23,7 +23,7 @@ import java.util.ArrayList;
    private Stage mainWindow;
 
    private Label applicationTitle;
-    private String programName = "SigmaCalc";
+    private String programName = "Multix";
     private String programVersion = "2.0";
     private DatePicker fromDatePicker;
     private TextField fromStartDateInputBox;

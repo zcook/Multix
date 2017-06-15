@@ -6,6 +6,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.*;
@@ -22,6 +23,8 @@ import javafx.scene.*;
          BorderPane messageBoxLayout;
          Label msg;
          Button okButton;
+         String iconPath = "Multix Window Icon.png";
+
 
         okButton = new Button("OK");
 
@@ -38,7 +41,7 @@ import javafx.scene.*;
 
         messageBox = new Stage();
 
-
+        messageBox.getIcons().add(new Image(iconPath));
         messageBox.setTitle(title);
         messageBox.setScene(messageBoxScene);
         messageBox.setMinHeight(150);

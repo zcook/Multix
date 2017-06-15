@@ -19,8 +19,14 @@ import javafx.stage.Stage;
 class MainWindowGUI {
 
     private Stage mainWindow;
-    private String splashScreenPath = "file:C:\\Users\\Zane\\Dropbox\\Misc\\Electronics & Computer Science\\Java\\JavaPrograms\\SigmaCalc\\Images\\SigmaCalc Spash Screen Logo.png";
+
+    private String splashScreenPath = "Multix Splash Screen Logo.png";
     private Image splahScreenImage = new Image(splashScreenPath);
+    private String programName = "Multix";
+    private String programVersion = "2.0";
+
+
+
     ImageView splashScreen = new ImageView(splahScreenImage);
 
     Scene BuildMainWindowGUI(Stage window){
@@ -46,6 +52,8 @@ class MainWindowGUI {
         startSceneBorderLayout.setTop(BuildMenuBar());
         startSceneBorderLayout.setCenter(splashScreen);
         startScene = new Scene(startSceneBorderLayout,mainWindowWidth,mainWindowHeight);
+        startScene.getStylesheets().add("MainWindowGUI.css");
+
         mainWindow.setResizable(false);
 
         return startScene;
@@ -93,6 +101,7 @@ class MainWindowGUI {
 
     private void AboutMenu_OnClick(){
 
-        MessageBox.show("About selected","Message Box");
+        MessageBox.show("About "+ programName, programName + " Version "+programVersion +
+                " \n\n A multi application suite to assist with everyday calculations / conversions.\n");
     }
 }

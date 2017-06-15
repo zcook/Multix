@@ -23,9 +23,9 @@ public class Main extends Application{
     @Override
     public void start(Stage mainWindow) throws Exception {
 
-        String programTitle = "SigmaCalc";
-        String iconPath = "file:C:\\Users\\Zane\\Dropbox\\Misc\\Electronics & Computer Science\\Java\\JavaPrograms\\SigmaCalc\\Images\\SigmaCalc Window Icon.png";
+        String programTitle = "Multix";
 
+        String iconPath = "Multix Window Icon.png";
 
 
         mainWindow.setScene(SceneBuilder.BuildMainWindowScene(mainWindow));

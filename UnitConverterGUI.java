@@ -36,7 +36,7 @@ import java.util.ArrayList;
     private Label resultsLabel;
     private String conversionType;
     private Label conversionFormula;
-    private String programName = "SigmaCalc";
+    private String programName = "Multix";
     private String programVersion = "2.0";
 
 
