@@ -1,0 +1,9 @@
+.root
+{
+	-fx-background-color: White;
+}
+
+.globalButtonText
+{
+	 -fx-font-weight:bold;
+}

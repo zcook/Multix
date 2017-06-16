@@ -64,7 +64,7 @@ import java.util.ArrayList;
        startSceneBorderLayout.setTop(MenuBarLayout());
        startSceneBorderLayout.setCenter(UserInterfaceLayout());
        UnitConverterScene = new Scene(startSceneBorderLayout, mainWindowWidth, mainWindowHeight);
-       UnitConverterScene.getStylesheets().add("UnitConverterGUI.css");
+       UnitConverterScene.getStylesheets().addAll("GlobalStyle.css","UnitConverterGUI.css");
         mainWindow.setMinHeight(420);
         mainWindow.setMinWidth(400);
 
@@ -310,22 +310,30 @@ import java.util.ArrayList;
         HBox calculateAndSwapButtonLayout = new HBox(20);
 
         Button swapButton = new Button("Swap Units");
-        Button calculate = new Button("Calculate");
+        swapButton.getStyleClass().add("globalButtonText");
+        swapButton.setMinHeight(38);
+        swapButton.setMinWidth(80);
+
+        Button calculateButton = new Button("Calculate");
+        calculateButton.getStyleClass().add("globalButtonText");
+        calculateButton.setMinHeight(38);
+        calculateButton.setMinWidth(80);
+
         Region spacerNode = new Region();
 
-        calculateAndSwapButtonLayout.setPadding(new Insets(5,10,20,10));
+        calculateAndSwapButtonLayout.setPadding(new Insets(5,50,20,50));
         spacerNode.setPadding(new Insets(0,20,0,20));
         HBox.setHgrow(spacerNode,Priority.ALWAYS);
         swapButton.setPrefHeight(40);
-        calculate.setPrefHeight(40);
+        calculateButton.setPrefHeight(40);
 
         swapButton.setOnAction(e-> SwapButton_OnClick());
         swapButton.setOnKeyPressed(e-> SwapButton_OnEnter(e));
-        calculate.setOnAction(e-> Calculate_OnClick());
-        calculate.setOnKeyPressed(e-> Calculate_OnEnter(e));
+        calculateButton.setOnAction(e-> Calculate_OnClick());
+        calculateButton.setOnKeyPressed(e-> Calculate_OnEnter(e));
 
 
-        calculateAndSwapButtonLayout.getChildren().addAll(swapButton,spacerNode,calculate);
+        calculateAndSwapButtonLayout.getChildren().addAll(swapButton,spacerNode,calculateButton);
 
         return calculateAndSwapButtonLayout;
     }

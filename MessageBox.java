@@ -27,6 +27,7 @@ import javafx.scene.*;
 
 
         okButton = new Button("OK");
+        okButton.getStyleClass().addAll("globalButtonText");
 
         msg = new Label(message);
 
@@ -38,6 +39,7 @@ import javafx.scene.*;
         messageBoxLayout.setPadding(new Insets(10,10,10,10));
 
         messageBoxScene = new Scene(messageBoxLayout);
+        messageBoxScene.getStylesheets().addAll("GlobalStyle.css");
 
         messageBox = new Stage();
 

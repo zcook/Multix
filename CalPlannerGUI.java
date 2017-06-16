@@ -65,7 +65,7 @@ import java.util.ArrayList;
         startSceneBorderLayout.setTop(MenuBarLayout());
         startSceneBorderLayout.setCenter(LeadTimeUserInterface());
         CalPlannerScene = new Scene(startSceneBorderLayout, mainWindowWidth, mainWindowHeight);
-        CalPlannerScene.getStylesheets().add("CalPlannerGUI.css");
+        CalPlannerScene.getStylesheets().addAll("GlobalStyle.css","CalPlannerGUI.css");
         mainWindow.setMinHeight(420);
         mainWindow.setMinWidth(400);
 
@@ -148,6 +148,7 @@ import java.util.ArrayList;
         Button calculateButton = new Button("Calculate");
         calculateButton.setMinHeight(40);
         calculateButton.setMinWidth(80);
+        calculateButton.getStyleClass().add("globalButtonText");
         VBox workDayUserInterface = new VBox(20);
         Separator resultsSeparator = new Separator();
 
@@ -357,10 +358,12 @@ import java.util.ArrayList;
         stepButton = new Button("Step");
         stepButton.setMinHeight(38);
         stepButton.setMinWidth(80);
+        stepButton.getStyleClass().add("globalButtonText");
 
         Button calculateButton = new Button("Calculate");
         calculateButton.setMinHeight(38);
         calculateButton.setMinWidth(80);
+        calculateButton.getStyleClass().add("globalButtonText");
 
         Region spacerNode = new Region();
         spacerNode.setMinWidth(120);
