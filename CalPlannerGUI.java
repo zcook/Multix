@@ -11,7 +11,10 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.util.converter.LocalDateStringConverter;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 /**
@@ -40,6 +43,7 @@ import java.util.ArrayList;
     private Boolean isFromEndDate = false;
     private Boolean isWorkDayPlanner = false;
     private Boolean isLeadTimePlanner = false;
+
 
     BorderPane startSceneBorderLayout;
 
@@ -202,6 +206,8 @@ import java.util.ArrayList;
         fromDatePicker.getEditor().setVisible(false);
         fromDatePicker.setMaxWidth(0);
         fromDatePicker.setFocusTraversable(false);
+        fromDatePicker.setShowWeekNumbers(true);
+
 
 
 
@@ -249,6 +255,7 @@ import java.util.ArrayList;
         toDatePicker.setMaxWidth(0);
         toDatePicker.getEditor().setVisible(false);
         toDatePicker.setFocusTraversable(false);
+        toDatePicker.setShowWeekNumbers(true);
 
         fromEndDateInputBox = new TextField();
         fromEndDateInputBox.setMinWidth(100);
@@ -419,7 +426,7 @@ import java.util.ArrayList;
     private void AboutMenu_OnClick(){
 
         MessageBox.show("About "+ programName, programName + " Version "+programVersion +
-                " \n\n A multi application suite to assist with everyday calculations / conversions.\n");
+                " \n A multi application suite to assist with everyday calculations / conversions.\n\n");
     }
 
     private void WorkDayPlannerMenu_OnClick(){
@@ -543,8 +550,10 @@ import java.util.ArrayList;
                 if (IsNumber(weeksInputBox.getText()) && IsNumber(daysInputBox.getText())) {
                     if (isFromStartDate) {
                         CalculateLeadTime(fromStartDateInputBox.getText());
+
                     } else if (isFromEndDate) {
                         CalculateLeadTime(fromEndDateInputBox.getText());
+                        
                     }
                 }
 
@@ -662,7 +671,16 @@ import java.util.ArrayList;
     private void CalculateWorkDays(){
 
         CalPlanner cpWordDayCalculator = new CalPlanner(fromStartDateInputBox.getText(),fromEndDateInputBox.getText());
-       results.setText(cpWordDayCalculator.getWorkDays(numberOfWorkDaysComboBox.getValue().toString()));
+       results.setText(cpWordDayCalculator.getWorkDays(numberOfWorkDaysComboBox.getValue().toString())+" DAYS");
+
+    }
+
+    private LocalDate parseDateForDatePicker(String dateString){
+
+         DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("mm/DD/yyyy");
+         LocalDate formattedDate = LocalDate.parse(dateString,dateFormatter);
+
+         return formattedDate;
 
     }
 

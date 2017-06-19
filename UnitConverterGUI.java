@@ -85,7 +85,7 @@ import java.util.ArrayList;
       menuBar = new javafx.scene.control.MenuBar();
       applicationMenu = new javafx.scene.control.Menu("Application");
       helpMenu = new javafx.scene.control.Menu("Help");
-      calPlanner = new javafx.scene.control.MenuItem("CalPlanner");
+      calPlanner = new javafx.scene.control.MenuItem("Date Planner");
       aboutMenu = new javafx.scene.control.MenuItem("About");
 
        Menu conversionType = new Menu("Conversion Type");
@@ -497,7 +497,7 @@ import java.util.ArrayList;
    private void AboutMenu_OnClick(){
 
       MessageBox.show("About "+ programName, programName + " Version "+programVersion +
-              " \n\n A multi application suite to assist with everyday calculations / conversions.\n");
+              " \n A multi application suite to assist with everyday calculations / conversions.\n\n");
    }
 
    private void SwapButton_OnClick(){

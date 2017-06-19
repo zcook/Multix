@@ -7,12 +7,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.*;
 import javafx.scene.*;
 
- class MessageBox {
+class MessageBox {
 
    private static Stage messageBox;
 
@@ -52,6 +52,7 @@ import javafx.scene.*;
 
 
         okButton.setOnAction(e-> okButtonClick());
+        okButton.setOnKeyPressed( e -> okButton_OnEnter(e));
 
         messageBox.show();
     }
@@ -59,6 +60,13 @@ import javafx.scene.*;
     private static void okButtonClick(){
 
         messageBox.close();
+    }
+
+    private static void okButton_OnEnter(javafx.scene.input.KeyEvent e){
+
+        if (e.getCode() == KeyCode.ENTER){
+            messageBox.close();
+        }
     }
 
 
