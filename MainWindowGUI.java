@@ -23,7 +23,7 @@ class MainWindowGUI {
     private String splashScreenPath = "Multix Splash Screen Logo.png";
     private Image splahScreenImage = new Image(splashScreenPath);
     private String programName = "Multix";
-    private String programVersion = "2.0";
+    private String programVersion = "2.1";
 
 
 

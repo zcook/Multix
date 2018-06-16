@@ -670,12 +670,12 @@ import java.util.ArrayList;
 
     private void CalculateWorkDays(){
 
-        CalPlanner cpWordDayCalculator = new CalPlanner(fromStartDateInputBox.getText(),fromEndDateInputBox.getText());
-       results.setText(cpWordDayCalculator.getWorkDays(numberOfWorkDaysComboBox.getValue().toString())+" DAYS");
+        CalPlanner cpWorkDayCalculator = new CalPlanner(fromStartDateInputBox.getText(),fromEndDateInputBox.getText());
+       results.setText(cpWorkDayCalculator.getWorkDays(numberOfWorkDaysComboBox.getValue().toString())+" DAYS");
 
     }
 
-    private LocalDate parseDateForDatePicker(String dateString){
+   private LocalDate parseDateForDatePicker(String dateString){
 
          DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("mm/DD/yyyy");
          LocalDate formattedDate = LocalDate.parse(dateString,dateFormatter);

@@ -91,8 +91,9 @@ import java.util.ArrayList;
        Menu conversionType = new Menu("Conversion Type");
        MenuItem linearConversionMenuItem = new MenuItem("Linear");
        MenuItem volumeConversionMenuItem = new MenuItem("Volume");
-       MenuItem massConversionMenuItem = new MenuItem("Mass");
+       MenuItem massConversionMenuItem = new MenuItem("Mass / Weight");
        MenuItem temperatureConversionMenuItem = new MenuItem("Temperature");
+       MenuItem pressureConversionMenueItem=new MenuItem(("Pressure"));
 
 
       //Build Menus
@@ -102,7 +103,8 @@ import java.util.ArrayList;
                linearConversionMenuItem,
                volumeConversionMenuItem,
                massConversionMenuItem,
-               temperatureConversionMenuItem);
+               temperatureConversionMenuItem,
+               pressureConversionMenueItem);
 
       helpMenu.getItems().addAll(aboutMenu);
 
@@ -113,6 +115,7 @@ import java.util.ArrayList;
        volumeConversionMenuItem.setOnAction(e->VolumeMenuItem_OnClick());
        massConversionMenuItem.setOnAction(e->MassMenuItem_OnClick());
        temperatureConversionMenuItem.setOnAction(e-> TemperatureMenuItem_OnClick());
+       pressureConversionMenueItem.setOnAction(e-> PressureMenueItem_OnClick());
 
       aboutMenu.setOnAction(event -> AboutMenu_OnClick());
 
@@ -414,7 +417,7 @@ import java.util.ArrayList;
        fromUnitsComboBox.setValue(massUnits.get(0));
        toUnitsComboBox.setValue(massUnits.get(0));
 
-       applicationTitle.setText("Mass Conversion");
+       applicationTitle.setText("Mass / Weight Conversion");
        conversionType = "Mass";
 
     }
@@ -438,6 +441,25 @@ import java.util.ArrayList;
        applicationTitle.setText("Temperature Conversion");
        conversionType = "Temperature";
 
+    }
+
+    private void PressureMenueItem_OnClick(){
+        ArrayList <String> pressureUnits = new ArrayList<>();
+
+        InitializeUnitChange();
+
+        pressureUnits.add("PSI");
+        pressureUnits.add("BAR");
+        pressureUnits.add("Pa");
+        pressureUnits.add("MPa");
+
+        fromUnitsComboBox.getItems().addAll(pressureUnits);
+        toUnitsComboBox.getItems().addAll(pressureUnits);
+        fromUnitsComboBox.setValue(pressureUnits.get(0));
+        toUnitsComboBox.setValue(pressureUnits.get(1));
+
+        applicationTitle.setText("Pressure");
+        conversionType="Pressure";
     }
 
    private void fromUnitsComboBox_OnChange(){

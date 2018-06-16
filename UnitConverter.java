@@ -102,6 +102,17 @@ public class UnitConverter {
     private String tempConversionFormula = "";
     /*END OF TEMPERATURE VARIABLES*********************************************************/
 
+    /*Pressure Variables*******************************************************************/
+    //PSI, BAR, Pa, PA_TO_MPA_Conversion
+
+
+
+    //Conversion Factors
+
+    private static final double PSI_TO_PA_CONVERSION = 6894.757;
+    private static final double BAR_TO_PA_CONVERSION = 100000;
+    private static final double PA_TO_MPA_Conversion = 0.000001;
+    private static final double BAR_TO_PSI_CONVERSION = BAR_TO_PA_CONVERSION/PSI_TO_PA_CONVERSION;//14.50378911491;
     /*________________________________________________________________________________________________________________*/
 
 
@@ -133,22 +144,26 @@ public class UnitConverter {
 
             if (conversionType.equals("Linear")) {
                 toValue = convertLinear();
-                getFormula(toValue); // get the formula to return to the Conversion Formula Text Area
+              //  getFormula(toValue); // get the formula to return to the Conversion Formula Text Area
             }
 
             else if (conversionType.equals("Volume")){
                 toValue = convertVolume();
-                getFormula(toValue);
+             //   getFormula(toValue);
             }
 
             else if (conversionType.equals("Mass")){
                 toValue = convertMass();
-                getFormula(toValue);
+             //   getFormula(toValue);
             }
 
             else if (conversionType.equals("Temperature")){
                 toValue = convertTemperature(fromValue);
-                getFormula(toValue);
+             //   getFormula(toValue);
+            }
+            else if (conversionType.equals("Pressure")){
+                toValue=ConvertPressure(fromValue);
+             //   getFormula((toValue));
             }
 
             return toValue;
@@ -483,6 +498,86 @@ public class UnitConverter {
         return answer;
     }
 
+    private String ConvertPressure(double fromPressure){
+
+        String answer = "";
+
+        switch (fromUnits){
+
+            case "PSI":
+                switch (toUnits){
+                    case "BAR":
+                        answer=""+ fromPressure/BAR_TO_PSI_CONVERSION;
+                        break;
+                    case "Pa":
+                        answer=""+fromPressure*PSI_TO_PA_CONVERSION;
+                        break;
+                    case "MPa":
+                        answer=""+fromPressure*PSI_TO_PA_CONVERSION* PA_TO_MPA_Conversion;
+                        break;
+                    case"PSI":
+                        answer=""+fromPressure;
+                        break;
+                }
+
+                break;
+
+            case"BAR":
+                switch (toUnits){
+                    case"PSI":
+                        answer=""+fromPressure*BAR_TO_PSI_CONVERSION;
+                        break;
+                    case "Pa":
+                        answer=""+fromPressure*BAR_TO_PA_CONVERSION;
+                        break;
+                    case "MPa":
+                        answer=""+fromPressure*BAR_TO_PA_CONVERSION* PA_TO_MPA_Conversion;
+                        break;
+                    case"BAR":
+                        answer=""+fromPressure;
+                        break;
+                }
+                break;
+            case "Pa":
+                switch ((toUnits)){
+                    case "PSI":
+                        answer=""+fromPressure/PSI_TO_PA_CONVERSION;
+                        break;
+                    case"BAR":
+                        answer=""+fromPressure/BAR_TO_PA_CONVERSION;
+                        break;
+                    case "MPa":
+                        answer=""+fromPressure*PA_TO_MPA_Conversion;
+                    case"Pa":
+                        answer=""+fromPressure;
+                        break;
+                }
+                break;
+
+                case "MPa":
+                    switch ((toUnits)){
+                        case "PSI":
+                            answer=""+fromPressure/PA_TO_MPA_Conversion/PSI_TO_PA_CONVERSION;
+                            break;
+                        case"BAR":
+                            answer=""+fromPressure/PA_TO_MPA_Conversion/BAR_TO_PA_CONVERSION;
+                            break;
+                        case "Pa":
+                            answer=""+fromPressure/PA_TO_MPA_Conversion;
+                            break;
+                        case"MPa":
+                            answer=""+fromPressure;
+                            break;
+                    }
+               break;
+            }
+        return answer;
+        }
+
+
+
+
+
 
      public String getFormula(String convertedValue){
 
@@ -494,6 +589,13 @@ public class UnitConverter {
             if (conversionType.equals("Temperature")){
                 return tempConversionFormula;
              }
+
+             else if (conversionType.equals("Pressure")){
+                //formats to comma separator and two decimal precision i.e. 32,000.00
+                formattedValue = String.format("%," + setPrecision(selectedPrecision) + "f", Double.parseDouble(convertedValue) / fromValue);
+
+                return "1 " + fromUnits + " = " + formattedValue + " " + toUnits;
+            }
 
              else {
 
@@ -517,7 +619,7 @@ public class UnitConverter {
          }
 
          catch (Exception e) {
-            System.out.println("Exception at getFormula Method");
+            System.out.println("Exception at getFormula Method"+e);
              return "";
          }
 
