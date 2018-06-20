@@ -27,7 +27,7 @@ import java.util.ArrayList;
 
    private Label applicationTitle;
     private String programName = "Multix";
-    private String programVersion = "2.0";
+    private String programVersion = "2.2";
     private DatePicker fromDatePicker;
     private TextField fromStartDateInputBox;
     private DatePicker toDatePicker;

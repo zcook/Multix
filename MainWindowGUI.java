@@ -4,11 +4,7 @@
 
 
 import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.scene.control.Label;
-import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
-import javafx.scene.control.MenuItem;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -21,13 +17,13 @@ class MainWindowGUI {
     private Stage mainWindow;
 
     private String splashScreenPath = "Multix Splash Screen Logo.png";
-    private Image splahScreenImage = new Image(splashScreenPath);
+    private Image splashScreenImage = new Image(splashScreenPath);
     private String programName = "Multix";
-    private String programVersion = "2.1";
+    private String programVersion = "2.2";
 
 
 
-    ImageView splashScreen = new ImageView(splahScreenImage);
+    ImageView splashScreen = new ImageView(splashScreenImage);
 
     Scene BuildMainWindowGUI(Stage window){
 

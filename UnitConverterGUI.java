@@ -37,7 +37,10 @@ import java.util.ArrayList;
     private String conversionType;
     private Label conversionFormula;
     private String programName = "Multix";
-    private String programVersion = "2.0";
+    private String programVersion = "2.2";
+    private String [] precisionValueArray ={"0","0.1","0.12","0.123","0.1234","0.12345","0.123456"};
+    private int precisionIndex=1;
+    private boolean manualPrecisionChange=false;
 
 
     Scene BuildUnitConverterGUI(Stage window) {
@@ -69,6 +72,7 @@ import java.util.ArrayList;
         mainWindow.setMinWidth(400);
 
 
+        LinearMenuItem_OnClick();
        return UnitConverterScene;
 
         }
@@ -93,7 +97,7 @@ import java.util.ArrayList;
        MenuItem volumeConversionMenuItem = new MenuItem("Volume");
        MenuItem massConversionMenuItem = new MenuItem("Mass / Weight");
        MenuItem temperatureConversionMenuItem = new MenuItem("Temperature");
-       MenuItem pressureConversionMenueItem=new MenuItem(("Pressure"));
+       MenuItem pressureConversionMenuItem=new MenuItem(("Pressure"));
 
 
       //Build Menus
@@ -104,7 +108,7 @@ import java.util.ArrayList;
                volumeConversionMenuItem,
                massConversionMenuItem,
                temperatureConversionMenuItem,
-               pressureConversionMenueItem);
+               pressureConversionMenuItem);
 
       helpMenu.getItems().addAll(aboutMenu);
 
@@ -115,7 +119,7 @@ import java.util.ArrayList;
        volumeConversionMenuItem.setOnAction(e->VolumeMenuItem_OnClick());
        massConversionMenuItem.setOnAction(e->MassMenuItem_OnClick());
        temperatureConversionMenuItem.setOnAction(e-> TemperatureMenuItem_OnClick());
-       pressureConversionMenueItem.setOnAction(e-> PressureMenueItem_OnClick());
+       pressureConversionMenuItem.setOnAction(e-> PressureMenuItem_OnClick());
 
       aboutMenu.setOnAction(event -> AboutMenu_OnClick());
 
@@ -219,7 +223,7 @@ import java.util.ArrayList;
       precisionBoxLayout.setPadding(new Insets(10,0,0,0));
       VBox.setMargin(precisionComboBox, new Insets(0,0,0,0));
 
-       precisionComboBox.getItems().addAll("0","0.1","0.12","0.123","0.1234","0.12345","0.123456");
+       precisionComboBox.getItems().addAll(precisionValueArray);
        precisionComboBox.setValue("0");
 
        precisionComboBox.setOnAction(e-> PrecisionComboBox_OnChange());
@@ -363,11 +367,12 @@ import java.util.ArrayList;
 
        fromUnitsComboBox.getItems().addAll(linearUnits);
        toUnitsComboBox.getItems().addAll(linearUnits);
-       fromUnitsComboBox.setValue(linearUnits.get(0));
-       toUnitsComboBox.setValue(linearUnits.get(0));
+       fromUnitsComboBox.setValue(linearUnits.get(5));
+       toUnitsComboBox.setValue(linearUnits.get(2));
 
        applicationTitle.setText("Linear Conversion");
        conversionType = "Linear";
+       valueInputBox.requestFocus();
 
     }
 
@@ -389,10 +394,11 @@ import java.util.ArrayList;
         toUnitsComboBox.getItems().addAll(volumeUnits);
 
        fromUnitsComboBox.setValue(volumeUnits.get(0));
-       toUnitsComboBox.setValue(volumeUnits.get(0));
+       toUnitsComboBox.setValue(volumeUnits.get(1));
 
        applicationTitle.setText("Volume Conversion");
        conversionType = "Volume";
+       valueInputBox.requestFocus();
 
 
    }
@@ -414,11 +420,12 @@ import java.util.ArrayList;
         fromUnitsComboBox.getItems().addAll(massUnits);
         toUnitsComboBox.getItems().addAll(massUnits);
 
-       fromUnitsComboBox.setValue(massUnits.get(0));
-       toUnitsComboBox.setValue(massUnits.get(0));
+       fromUnitsComboBox.setValue(massUnits.get(4));
+       toUnitsComboBox.setValue(massUnits.get(1));
 
        applicationTitle.setText("Mass / Weight Conversion");
        conversionType = "Mass";
+       valueInputBox.requestFocus();
 
     }
 
@@ -436,14 +443,15 @@ import java.util.ArrayList;
         toUnitsComboBox.getItems().addAll(tempUnits);
 
        fromUnitsComboBox.setValue(tempUnits.get(0));
-       toUnitsComboBox.setValue(tempUnits.get(0));
+       toUnitsComboBox.setValue(tempUnits.get(1));
 
        applicationTitle.setText("Temperature Conversion");
        conversionType = "Temperature";
+       valueInputBox.requestFocus();
 
     }
 
-    private void PressureMenueItem_OnClick(){
+    private void PressureMenuItem_OnClick(){
         ArrayList <String> pressureUnits = new ArrayList<>();
 
         InitializeUnitChange();
@@ -460,6 +468,7 @@ import java.util.ArrayList;
 
         applicationTitle.setText("Pressure");
         conversionType="Pressure";
+        valueInputBox.requestFocus();
     }
 
    private void fromUnitsComboBox_OnChange(){
@@ -468,6 +477,7 @@ import java.util.ArrayList;
              inputUnitsLabel.setText(fromUnitsComboBox.getValue().toString());
 
              if (CanCalculate()) {
+                 manualPrecisionChange=false;
                CalculateResults();
 
            }
@@ -482,6 +492,7 @@ import java.util.ArrayList;
           resultUnitsLabel.setText(toUnitsComboBox.getValue().toString());
 
           if (CanCalculate()) {
+              manualPrecisionChange=false;
               CalculateResults();
           }
       }
@@ -490,6 +501,7 @@ import java.util.ArrayList;
 
    private void PrecisionComboBox_OnChange(){
         if (CanCalculate()){
+            manualPrecisionChange=true;
             CalculateResults();
         }
     }
@@ -497,6 +509,7 @@ import java.util.ArrayList;
    private void Calculate_OnClick(){
 
         if (CanCalculate()) {
+            manualPrecisionChange=false;
             CalculateResults();
         }
     }
@@ -504,7 +517,7 @@ import java.util.ArrayList;
    private void Calculate_OnEnter(javafx.scene.input.KeyEvent e){
 
        if (IsEnterButton(e) && CanCalculate()){
-
+            manualPrecisionChange=false;
            CalculateResults();
        }
     }
@@ -512,6 +525,7 @@ import java.util.ArrayList;
    private void InputBox_OnChange(){
 
         if (CanCalculate()) {
+            manualPrecisionChange=false;
             CalculateResults();
         }
     }
@@ -524,14 +538,18 @@ import java.util.ArrayList;
 
    private void SwapButton_OnClick(){
 
-       if (CanCalculate()) {
-           SwapUnits();
-       }
+      if (CanCalculate()||valueInputBox.getText().equals("")) {
+          manualPrecisionChange = false;
+          SwapUnits();
+          if(valueInputBox.getText().equals("")){
+              resultsLabel.setText("");
+          }
+      }
    }
 
    private void SwapButton_OnEnter(javafx.scene.input.KeyEvent e){
         if (IsEnterButton(e) && CanCalculate()){
-
+            manualPrecisionChange=false;
             SwapUnits();
         }
     }
@@ -554,6 +572,12 @@ import java.util.ArrayList;
 
    private void CalculateResults(){
 
+       String formattedAnswer =Calculate();
+
+       CheckPrecision(formattedAnswer);
+   }
+
+   private String Calculate(){
        String fromUnits = fromUnitsComboBox.getValue().toString();
        String toUnits = toUnitsComboBox.getValue().toString();
        String precision = precisionComboBox.getValue().toString();
@@ -561,22 +585,62 @@ import java.util.ArrayList;
        String answer;
        String formula;
        String selectedFormat;
+       String formattedAnswer;
+       String parsedAnswer="";
+       String selectedFormatForParsing;
 
        UnitConverter unitConverter = new UnitConverter(inputValue,fromUnits,toUnits,conversionType,precision);
        answer = unitConverter.convertUnits();
        formula = unitConverter.getFormula(answer);
        selectedFormat = "%,"+unitConverter.setPrecision("" + precision)+"f";
+       selectedFormatForParsing="%"+unitConverter.setPrecision("" + precision)+"f";
+
 
 
        try {
-          resultsLabel.setText(String.format(selectedFormat,Double.parseDouble(answer)));
-          conversionFormula.setText(formula);
-
+           formattedAnswer = String.format(selectedFormat,Double.parseDouble(answer));
+           parsedAnswer=String.format(selectedFormatForParsing,Double.parseDouble(answer));
+           resultsLabel.setText(formattedAnswer);
+           conversionFormula.setText(formula);
        }
        catch (Exception e){
 
            System.out.println("Error in calculate method");
        }
+
+       return parsedAnswer;
+   }
+
+   private void CheckPrecision(String formattedAnswer){
+
+        double numericalFormattedAnswer;
+        try {
+
+            if (!conversionType.equals("Temperature")) {
+                numericalFormattedAnswer = Double.parseDouble((formattedAnswer));
+                if (numericalFormattedAnswer == 0) {
+                    precisionComboBox.setValue(precisionValueArray[precisionIndex]);
+                    precisionIndex++;
+                    CalculateResults();
+
+
+                } else if (numericalFormattedAnswer >= 100 && !manualPrecisionChange) {
+                    precisionComboBox.setValue(precisionValueArray[0]);
+                } else if (numericalFormattedAnswer >= 10 && numericalFormattedAnswer < 100 && !manualPrecisionChange) {
+                    precisionComboBox.setValue(precisionValueArray[1]);
+                } else if (numericalFormattedAnswer >= 1 && numericalFormattedAnswer < 10 && !manualPrecisionChange) {
+                    precisionComboBox.setValue((precisionValueArray[2]));
+                } else {
+                    precisionIndex = 1;
+                }
+            }
+        }
+
+        catch(Exception e){
+                System.out.println("Error in Check Precision" + e);
+            }
+
+
    }
 
 
