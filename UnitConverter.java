@@ -548,6 +548,7 @@ public class UnitConverter {
                         break;
                     case "MPa":
                         answer=""+fromPressure*PA_TO_MPA_Conversion;
+                        break;
                     case"Pa":
                         answer=""+fromPressure;
                         break;
